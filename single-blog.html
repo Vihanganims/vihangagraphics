@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MSTCCH Products</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+      color: #2c2c2c;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .product {
+      background: #fff;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.06);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .product:hover {
+      transform: translateY(-4px);
+    }
+
+    .product img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .product h3 {
+      font-size: 18px;
+      margin: 0;
+    }
+
+    .product p {
+      font-size: 14px;
+      color: #777;
+      margin: 5px 0 0;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      border-radius: 16px;
+      position: relative;
+    }
+
+    .modal-content img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .price {
+      color: #ff6600;
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>MSTCCH Products</h1>
+
+<div class="products" id="product-list">
+  <!-- Product Cards -->
+</div>
+
+<!-- Modal for product details -->
+<div class="modal" id="product-modal">
+  <div class="modal-content" id="modal-content">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <!-- Content will be filled dynamically -->
+  </div>
+</div>
+
+<script>
+  const products = [
+    {
+      name: "Product A",
+      description: "High quality printable design with PDF and PNG files included.",
+      price: "Rs. 750",
+      image: "https://via.placeholder.com/400x300"
+    },
+    {
+      name: "Product B",
+      description: "Perfect for branding, posters and logos. Instant digital download.",
+      price: "Rs. 1200",
+      image: "https://via.placeholder.com/400x300"
+    },
+    {
+      name: "Product C",
+      description: "Editable files included. Ideal for flyers and online ads.",
+      price: "Rs. 950",
+      image: "https://via.placeholder.com/400x300"
+    }
+  ];
+
+  const productList = document.getElementById('product-list');
+  const modal = document.getElementById('product-modal');
+  const modalContent = document.getElementById('modal-content');
+
+  function showProduct(product) {
+    modalContent.innerHTML = `
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <img src="${product.image}" alt="${product.name}">
+      <h2>${product.name}</h2>
+      <p>${product.description}</p>
+      <div class="price">${product.price}</div>
+    `;
+    modal.style.display = 'flex';
+  }
+
+  function closeModal() {
+    modal.style.display = 'none';
+  }
+
+  // Load product cards
+  products.forEach(product => {
+    const card = document.createElement('div');
+    card.className = 'product';
+    card.innerHTML = `
+      <img src="${product.image}" alt="${product.name}">
+      <h3>${product.name}</h3>
+      <p>${product.price}</p>
+    `;
+    card.onclick = () => showProduct(product);
+    productList.appendChild(card);
+  });
+
+  // Close modal when clicking outside content
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) closeModal();
+  });
+</script>
+
+</body>
+</html>
